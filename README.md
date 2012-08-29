@@ -76,7 +76,7 @@ Creating a `CHANGELOG.md` that details a short message about any changes include
 
 Updating a `TODO.md` file if there are outstanding known issues, planned work for the next version, etc. A TODO file also helps anyone else in the community try to tackle a problem you haven't figured out or gotten to yet, so they can issue a pull request for your cookbook.
 
-Follow [Semantic Versioning][semver] when choosing which version number to increment to. Start your cookbook at 0.1.0, and increment from there, until you are confident enough in a 1.0.0 version. This should be done with `--version=1.0.0`, for example.
+Follow [Semantic Versioning][semver] when choosing which version number to increment to. Start your cookbook at 0.1.0, and increment from there, until you are confident enough in a 1.0.0 version. This should be done with `--ver=1.0.0`, for example.
 
 Test, test, test. And then test again.
 
