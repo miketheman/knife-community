@@ -28,14 +28,14 @@ Assumptions
 ### Important
 * You have **not** incremented the version number in `metadata.rb` - this will do so for you
 * You have a `name` string defined in your `metadata.rb`, OR your repository name is identical to your cookbook name
-
+* You have either committed or staged all changes to be included with this version release. Any uncommitted changed should be `git stash`ed, or stage them to be committed along with the version via `git add`
 
 Cookbook Release Workflow
 -------------------------
 
 Assuming you have made your changes, tested your code thoroughly (one can hope!), all merged into your `master` branch, and are ready to release a new version of your cookbook, here's a flow to follow:
 
-1. Ensure that the branch is 'clean' - no outstanding uncommitted changes
+1. Ensure that the branch is ready to be committed. If there are uncommitted changes, error out.
 1. Read in the current `metadata.rb`, inspect the `version` string, and increment it to the next minor version. Override with `--ver`
 1. Create a git commit for the `metadata.rb` change.
 1. Create a git tag with the version number (no leading "v" or the like)
@@ -51,14 +51,14 @@ Usage
 Invoke
 ------
 
-    knife community release COOKBOOK [ --ver=X.Y.Z | --remote=origin | --branch=master | --devodd ]
+    knife community release COOKBOOK [X.Y.Z | --remote=origin | --branch=master | --devodd ]
 
 Flags
 -----
 
-* `--ver=VER` - String, Version in X.Y.Z format. Manually specify the version.
+* `X.Y.Z` - String, Version in X.Y.Z format. Manually specify the version.
 
-    If unspecified, increments to the next x.y.Z version (`--version` is already defined in knife)
+    If unspecified, increments to the next x.y.Z version
 
 * `--remote=REMOTE` - String, Remote repository to push to. Defaults to `origin`
 
@@ -76,7 +76,7 @@ Creating a `CHANGELOG.md` that details a short message about any changes include
 
 Updating a `TODO.md` file if there are outstanding known issues, planned work for the next version, etc. A TODO file also helps anyone else in the community try to tackle a problem you haven't figured out or gotten to yet, so they can issue a pull request for your cookbook.
 
-Follow [Semantic Versioning][semver] when choosing which version number to increment to. Start your cookbook at 0.1.0, and increment from there, until you are confident enough in a 1.0.0 version. This should be done with `--ver=1.0.0`, for example.
+Follow [Semantic Versioning][semver] when choosing which version number to increment to. Start your cookbook at 0.1.0, and increment from there, until you are confident enough in a 1.0.0 version.
 
 Test, test, test. And then test again.
 
