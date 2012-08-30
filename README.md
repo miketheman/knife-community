@@ -51,7 +51,7 @@ Usage
 Invoke
 ------
 
-    knife community release COOKBOOK [X.Y.Z | --remote=origin | --branch=master | --devodd ]
+    knife community release COOKBOOK [X.Y.Z | --remote | --branch | --devodd ]
 
 Flags
 -----
@@ -60,9 +60,9 @@ Flags
 
     If unspecified, increments to the next x.y.Z version
 
-* `--remote=REMOTE` - String, Remote repository to push to. Defaults to `origin`
+* `--remote REMOTE` - String, Remote repository to push to. Defaults to `origin`
 
-* `--branch=BRANCHNAME` - String, Branch name. Defaults to `master`
+* `--branch BRANCHNAME` - String, Branch name. Defaults to `master`
 
 * `--devodd` - Boolean. If specified, post-release, will bump the minor version to the next odd number, and generate another commit & push (but no tags).
 

@@ -1,17 +1,20 @@
 #!/usr/bin/env rake
 require "bundler/gem_tasks"
 
+task :default => [:features]
+
 # https://github.com/turboladen/tailor
 require 'tailor/rake_task'
 Tailor::RakeTask.new do |task|
-  task.file_set('lib/**/*.rb', 'code')
+  task.file_set('lib/**/*.rb', 'code') do |style|
+    style.max_line_length 100, level: :warn
+  end
 end
 
-require 'cucumber'
 require 'cucumber/rake/task'
 Cucumber::Rake::Task.new(:features) do |t|
   t.cucumber_opts = ['features', '-x']
-  t.cucumber_opts += ['--format progress']
+  t.cucumber_opts += ['--format pretty']
 end
 
 # File lib/tasks/notes.rake
