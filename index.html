@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>knife-community by miketheman</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>knife-community</h1>
+        <h2>A Knife plugin to assist with deploying completed Chef cookbooks to the Community Site</h2>
+        <a href="https://github.com/miketheman/knife-community" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>knife-community</h1>
+
+<p>A Knife plugin to assist with deploying completed Chef cookbooks to the Community Site</p>
+
+<h2>Intro</h2>
+
+<p>There are sooo many ways to <a href="http://en.wikipedia.org/wiki/List_of_software_package_management_systems#Application-level_package_managers">deliver software</a>.
+Apt has 'deb', Yum has 'rpm', Node has 'npm', RubyGems has 'gem', Java has 'jar', etc etc etc.</p>
+
+<p>In The Land of <a href="http://www.opscode.com/chef/">Chef</a>, the typical unit of shareable software is a 'cookbook'.</p>
+
+<p>The centralized location for sharing cookbooks is the <a href="http://community.opscode.com/">Community Site</a>, and we already have support to download/install these elements, either it be through <a href="http://wiki.opscode.com/display/chef/Managing+Cookbooks+With+Knife#ManagingCookbooksWithKnife-CookbookSite">knife itself</a>, <a href="https://github.com/applicationsonline/librarian">librarian</a>, and <a href="http://berkshelf.com/">berkshelf</a>, and there are probably others.</p>
+
+<p>What we <em>don't</em> have is a good method for cookbook maintainers to contribute back to the Community Site, while semi-enforcing good habits, such as version incrementing, git tags and forming the package correctly.</p>
+
+<h2>Assumptions</h2>
+
+<h3>Basics</h3>
+
+<ul>
+<li>You know what Git is</li>
+<li>You know what Chef is</li>
+<li>You have Push permissions to the remote GitHub repository</li>
+<li>You don't already have a perfected workflow that works for you</li>
+<li>You want to be a helpful citizen of the community</li>
+</ul><h3>Important</h3>
+
+<ul>
+<li>You have <strong>not</strong> incremented the version number in <code>metadata.rb</code> - this will do so for you</li>
+<li>You have a <code>name</code> string defined in your <code>metadata.rb</code>, OR your repository name is identical to your cookbook name</li>
+<li>You have either committed or staged all changes to be included with this version release. Any uncommitted changed should be <code>git stash</code>ed, or stage them to be committed along with the version via <code>git add</code>
+</li>
+</ul><h2>Cookbook Release Workflow</h2>
+
+<p>Assuming you have made your changes, tested your code thoroughly (one can hope!), all merged into your <code>master</code> branch, and are ready to release a new version of your cookbook, here's a flow to follow:</p>
+
+<ol>
+<li>Ensure that the branch is ready to be committed. If there are uncommitted changes, error out.</li>
+<li>Read in the current <code>metadata.rb</code>, inspect the <code>version</code> string, and increment it to the next minor version. Override with <code>--ver</code>
+</li>
+<li>Create a git commit for the <code>metadata.rb</code> change.</li>
+<li>Create a git tag with the version number (no leading "v" or the like)</li>
+<li>Push all commits/tags to the set remote, typically like <code>git push origin master</code>. Override with <code>--branch</code>
+</li>
+<li>Create a 'package' - effectively a compressed tarball - and upload it to the community site</li>
+<li>Have a beer, or glass of wine - you choose.</li>
+</ol><p>This flow can probably be used for most cookbook maintainers.</p>
+
+<h1>Usage</h1>
+
+<h2>Invoke</h2>
+
+<pre><code>knife community release COOKBOOK [X.Y.Z | --remote=origin | --branch=master | --devodd ]
+</code></pre>
+
+<h2>Flags</h2>
+
+<ul>
+<li>
+<p><code>X.Y.Z</code> - String, Version in X.Y.Z format. Manually specify the version.</p>
+
+<p>If unspecified, increments to the next x.y.Z version</p>
+</li>
+<li><p><code>--remote=REMOTE</code> - String, Remote repository to push to. Defaults to <code>origin</code></p></li>
+<li><p><code>--branch=BRANCHNAME</code> - String, Branch name. Defaults to <code>master</code></p></li>
+<li>
+<p><code>--devodd</code> - Boolean. If specified, post-release, will bump the minor version to the next odd number, and generate another commit &amp; push (but no tags).</p>
+
+<p>This is a flow that some adopt by having even-only numbered releases, utilizing the <a href="http://en.wikipedia.org/wiki/Software_versioning#Odd-numbered_versions_for_development_releases">odd numbered ones for development</a>.</p>
+</li>
+</ul><h2>Some good ideas while working on a cookbook</h2>
+
+<p>Creating a <code>CHANGELOG.md</code> that details a short message about any changes included in each release is really helpful to anyone looking at your updated cookbook and seeing if it addresses a problem they have, without delving deeper into the code.</p>
+
+<p>Updating a <code>TODO.md</code> file if there are outstanding known issues, planned work for the next version, etc. A TODO file also helps anyone else in the community try to tackle a problem you haven't figured out or gotten to yet, so they can issue a pull request for your cookbook.</p>
+
+<p>Follow <a href="http://semver.org/">Semantic Versioning</a> when choosing which version number to increment to. Start your cookbook at 0.1.0, and increment from there, until you are confident enough in a 1.0.0 version.</p>
+
+<p>Test, test, test. And then test again.</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/miketheman/knife-community/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/miketheman/knife-community/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/miketheman/knife-community"></a> is maintained by <a href="https://github.com/miketheman">miketheman</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
