@@ -30,6 +30,8 @@
         <section id="main-content">
           <h1>knife-community</h1>
 
+<p><a href="http://travis-ci.org/miketheman/knife-community"><img src="https://secure.travis-ci.org/miketheman/knife-community.png?branch=master" alt="Build Status"></a></p>
+
 <p>A Knife plugin to assist with deploying completed Chef cookbooks to the Community Site</p>
 
 <h2>Intro</h2>
@@ -80,7 +82,7 @@ Apt has 'deb', Yum has 'rpm', Node has 'npm', RubyGems has 'gem', Java has 'jar'
 
 <h2>Invoke</h2>
 
-<pre><code>knife community release COOKBOOK [X.Y.Z | --remote=origin | --branch=master | --devodd ]
+<pre><code>knife community release COOKBOOK [X.Y.Z | --remote | --branch | --devodd ]
 </code></pre>
 
 <h2>Flags</h2>
@@ -91,8 +93,8 @@ Apt has 'deb', Yum has 'rpm', Node has 'npm', RubyGems has 'gem', Java has 'jar'
 
 <p>If unspecified, increments to the next x.y.Z version</p>
 </li>
-<li><p><code>--remote=REMOTE</code> - String, Remote repository to push to. Defaults to <code>origin</code></p></li>
-<li><p><code>--branch=BRANCHNAME</code> - String, Branch name. Defaults to <code>master</code></p></li>
+<li><p><code>--remote REMOTE</code> - String, Remote repository to push to. Defaults to <code>origin</code></p></li>
+<li><p><code>--branch BRANCHNAME</code> - String, Branch name. Defaults to <code>master</code></p></li>
 <li>
 <p><code>--devodd</code> - Boolean. If specified, post-release, will bump the minor version to the next odd number, and generate another commit &amp; push (but no tags).</p>
 
@@ -126,6 +128,16 @@ Apt has 'deb', Yum has 'rpm', Node has 'npm', RubyGems has 'gem', Java has 'jar'
       </div>
     </div>
 
-  
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-34821130-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
   </body>
 </html>
