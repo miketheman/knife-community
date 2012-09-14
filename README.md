@@ -1,6 +1,7 @@
 knife-community
 ===============
 [![Build Status](https://secure.travis-ci.org/miketheman/knife-community.png?branch=master)](http://travis-ci.org/miketheman/knife-community)
+[![Dependency Status](https://gemnasium.com/miketheman/knife-community.png)](https://gemnasium.com/miketheman/knife-community)
 
 A Knife plugin to assist with deploying completed Chef cookbooks to the Community Site
 
