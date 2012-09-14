@@ -8,5 +8,5 @@ Scenario: Running with no arguments produces a failure
   Then the exit status should be 1
 
 Scenario: Running with too many arguments produces a failure
-  When I run `knife community release foo bar baz cat`
+  When I run `knife community release foo bar baz`
   Then the exit status should be 1

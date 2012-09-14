@@ -17,11 +17,13 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'chef', chef_version
   gem.required_ruby_version = '>= 1.9.2'
 
-  gem.add_development_dependency 'rake'
-  gem.add_development_dependency 'cucumber'
-  gem.add_development_dependency 'aruba'
-  gem.add_development_dependency 'tailor'
-  gem.add_development_dependency 'travis-lint'
+  gem.add_development_dependency 'rake', '~> 0.9'
+  gem.add_development_dependency 'cucumber', '~> 1'
+  gem.add_development_dependency 'aruba', '~> 0.4'
+  gem.add_development_dependency 'tailor', '~> 1.1'
+  gem.add_development_dependency 'travis-lint', '~> 1.4'
+  gem.add_development_dependency 'guard', '~> 1.3'
+  gem.add_development_dependency 'guard-cucumber', '~> 1.2'
 
   gem.authors       = ["Mike Fiedler"]
   gem.email         = ["miketheman@gmail.com"]

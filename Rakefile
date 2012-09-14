@@ -7,7 +7,7 @@ task :default => [:features]
 require 'tailor/rake_task'
 Tailor::RakeTask.new do |task|
   task.file_set('lib/**/*.rb', 'code') do |style|
-    style.max_line_length 100, level: :warn
+    style.max_line_length 160, level: :warn
   end
 end
 
@@ -15,6 +15,15 @@ require 'cucumber/rake/task'
 Cucumber::Rake::Task.new(:features) do |t|
   t.cucumber_opts = ['features', '-x']
   t.cucumber_opts += ['--format pretty']
+end
+
+# https://github.com/guard/guard
+require 'guard'
+desc "Start up guard. Does not exit until told to with 'q'."
+task :guard do
+  Guard.setup
+  Guard::Dsl.evaluate_guardfile(:guardfile => 'Guardfile')
+  Guard.start
 end
 
 # File lib/tasks/notes.rake
