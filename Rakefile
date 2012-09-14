@@ -19,7 +19,7 @@ end
 
 # https://github.com/guard/guard
 require 'guard'
-desc "Start up guard. Does not exit until told to with 'q'."
+desc "Start up guard, does not exit until told to with 'q'."
 task :guard do
   Guard.setup
   Guard::Dsl.evaluate_guardfile(:guardfile => 'Guardfile')
