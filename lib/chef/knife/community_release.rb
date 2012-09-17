@@ -84,7 +84,7 @@ module KnifeCommunity
     #
     # @return [String] @cb_path, a string with the root directory of the cookbook
     # @return [String] @cb_name, a string with the cookbook's name, either from metadata or interpreted from directory
-    def validate_cookbook_exists()
+    def validate_cookbook_exists
       unless cookbook_loader.cookbook_exists?(@cookbook)
         ui.error "Cannot find a cookbook named #{@cookbook} at #{config[:cookbook_path]}"
         exit 2
@@ -102,7 +102,7 @@ module KnifeCommunity
     # @return [String] The absolute file path of the git repository's root
     # @example
     #  "/Users/miketheman/git/knife-community"
-    def validate_repo()
+    def validate_repo
       begin
         proc = Mixlib::ShellOut.new("cd #{@cb_path} && git rev-parse --show-toplevel")
         proc.run_command
