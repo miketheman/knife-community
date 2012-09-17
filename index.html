@@ -69,8 +69,7 @@ Apt has 'deb', Yum has 'rpm', Node has 'npm', RubyGems has 'gem', Java has 'jar'
 
 <ol>
 <li>Ensure that the branch is ready to be committed. If there are uncommitted changes, error out.</li>
-<li>Read in the current <code>metadata.rb</code>, inspect the <code>version</code> string, and increment it to the next minor version. Override with <code>--ver</code>
-</li>
+<li>Read in the current <code>metadata.rb</code>, inspect the <code>version</code> string, and increment it to the next tiny version. Override with CLI argument.</li>
 <li>Create a git commit for the <code>metadata.rb</code> change.</li>
 <li>Create a git tag with the version number (no leading "v" or the like)</li>
 <li>Push all commits/tags to the set remote, typically like <code>git push origin master</code>. Override with <code>--branch</code>
