@@ -8,7 +8,6 @@ module KnifeCommunity
       require 'mixlib/shellout'
       require 'chef/config'
       require 'chef/cookbook_loader'
-      require 'chef/knife/cookbook_site_share'
       require 'grit'
       require 'versionomy'
       require 'json'
@@ -224,8 +223,8 @@ module KnifeCommunity
       category = JSON.parse(response.body)['category'] ||= "Other"
 
       cb_share = Chef::Knife::CookbookSiteShare.new
-      cb_share.config[:cookbook_path] = config[:cookbook_path] unless config[:cookbook_path].nil?
-      cb_share.do_upload(@cb_name, category, Chef::Config[:node_name], Chef::Config[:client_key])
+      cb_share.name_args = [@cb_name, category]
+      cb_share.run
     end
 
     def shellout(command)
