@@ -15,6 +15,13 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
 
   gem.add_dependency 'chef', chef_version
+
+  # OPTIMIZE: Use Mixlib/Shellout until actions are written in pure ruby
+  gem.add_dependency 'mixlib-shellout', '~> 1.1.0'
+
+  # Using Grit to examin git repo status, and interact with a git repo
+  gem.add_dependency 'grit', '~> 2'
+
   gem.required_ruby_version = '>= 1.9.2'
 
   gem.add_development_dependency 'rake', '~> 0.9'
