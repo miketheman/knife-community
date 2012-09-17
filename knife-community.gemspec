@@ -22,6 +22,9 @@ Gem::Specification.new do |gem|
   # Using Grit to examin git repo status, and interact with a git repo
   gem.add_dependency 'grit', '~> 2'
 
+  # A good version comparison library
+  gem.add_dependency 'versionomy', '~> 0.4'
+
   gem.required_ruby_version = '>= 1.9.2'
 
   gem.add_development_dependency 'rake', '~> 0.9'

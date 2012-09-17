@@ -8,6 +8,7 @@ module KnifeCommunity
       require 'mixlib/shellout'
       require 'chef/cookbook_loader'
       require 'grit'
+      require 'versionomy'
     end
 
     banner "knife community release COOKBOOK [VERSION] (options)"
@@ -39,12 +40,13 @@ module KnifeCommunity
       validate_args
       # Set variables for global use
       @cookbook = name_args.first
-      @version = name_args.last if name_args.size > 1
+      @version = Versionomy.parse(name_args.last) if name_args.size > 1
 
       # Do a bunch of validations before we change anything
       validate_cookbook_exists
       validate_repo
       validate_repo_clean
+      validate_version_sanity
 
 
       if config[:devodd]
@@ -87,8 +89,10 @@ module KnifeCommunity
         ui.error "Cannot find a cookbook named #{@cookbook} at #{config[:cookbook_path]}"
         exit 2
       end
-      @cb_path = cookbook_loader.cookbooks_by_name[@cookbook].root_dir
-      @cb_name = cookbook_loader.cookbooks_by_name[@cookbook].metadata.name.to_s
+      cb = cookbook_loader.cookbooks_by_name[@cookbook]
+      @cb_path = cb.root_dir
+      @cb_name = cb.metadata.name.to_s
+      @cb_version = Versionomy.parse(cb.version)
     end
 
     # Ensure that the cookbook is in a git repo
@@ -129,6 +133,20 @@ module KnifeCommunity
         end
       elsif status.untracked > 0
         ui.warn "There are untracked files in your repo. You might want to look into that."
+      end
+    end
+
+    # Ensure that the version specified is larger than the current version
+    # If a version wasn't specified on the command line, increment the current by one tiny.
+    def validate_version_sanity
+      if @version.nil?
+        @version = @cb_version.bump(:tiny)
+        ui.msg "No version was specified, the new version will be #{@version}"
+      end
+      if @cb_version >= @version
+        ui.error "The current version, #{@cb_version} is either greater or equal to the new version, #{@version}"
+        ui.error "For your own sanity, don't release historical cookbooks into the wild."
+        exit 5
       end
     end
 
