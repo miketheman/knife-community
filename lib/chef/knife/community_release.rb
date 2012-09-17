@@ -81,7 +81,7 @@ module KnifeCommunity
     # a metadata entry to describe the cookbook is better. In its absence, uses the directory name.
     #
     # @return [String] @cb_path, a string with the root directory of the cookbook
-    # @return [String] @cb_name, a string with the cookbook's anme, either from metadata or interpreted from directory
+    # @return [String] @cb_name, a string with the cookbook's name, either from metadata or interpreted from directory
     def validate_cookbook_exists()
       unless cookbook_loader.cookbook_exists?(@cookbook)
         ui.error "Cannot find a cookbook named #{@cookbook} at #{config[:cookbook_path]}"
