@@ -8,6 +8,8 @@ module KnifeCommunity
       require 'mixlib/shellout'
       require 'chef/config'
       require 'chef/cookbook_loader'
+      require 'chef/knife/cookbook_site_share'
+      require 'chef/cookbook_site_streaming_uploader'
       require 'grit'
       require 'versionomy'
       require 'json'
@@ -222,10 +224,9 @@ module KnifeCommunity
       response = Net::HTTP.get_response("cookbooks.opscode.com", "/api/v1/cookbooks/#{@cb_name}")
       category = JSON.parse(response.body)['category'] ||= "Other"
 
-      # The use the existing knife command to tarball & share.
-      # This could possibly done in a more elegant fashion than shelling out again.
-      knife_ckbk_path = "-o #{config[:cookbook_path].join(':')}" if !config[:cookbook_path].nil?
-      shellout("knife cookbook site share #{@cb_name} #{category} #{knife_ckbk_path}")
+      cb_share = Chef::Knife::CookbookSiteShare.new
+      cb_share.name_args = [@cb_name, category]
+      cb_share.run
     end
 
     def shellout(command)
