@@ -128,7 +128,7 @@ module KnifeCommunity
             ui.error "There seem to be unstaged changes in your repo. Either stash or add them."
             exit 4
           else
-            ui.info "There are modified files that have been staged, and will be included in the push."
+            ui.msg "There are modified files that have been staged, and will be included in the push."
           end
         end
       elsif status.untracked > 0

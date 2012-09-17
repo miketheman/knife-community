@@ -38,7 +38,7 @@ Cookbook Release Workflow
 Assuming you have made your changes, tested your code thoroughly (one can hope!), all merged into your `master` branch, and are ready to release a new version of your cookbook, here's a flow to follow:
 
 1. Ensure that the branch is ready to be committed. If there are uncommitted changes, error out.
-1. Read in the current `metadata.rb`, inspect the `version` string, and increment it to the next minor version. Override with `--ver`
+1. Read in the current `metadata.rb`, inspect the `version` string, and increment it to the next tiny version. Override with CLI argument.
 1. Create a git commit for the `metadata.rb` change.
 1. Create a git tag with the version number (no leading "v" or the like)
 1. Push all commits/tags to the set remote, typically like `git push origin master`. Override with `--branch`
