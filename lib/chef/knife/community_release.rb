@@ -8,6 +8,7 @@ module KnifeCommunity
       require 'mixlib/shellout'
       require 'chef/config'
       require 'chef/cookbook_loader'
+      require 'chef/knife/cookbook_site_share'
       require 'grit'
       require 'versionomy'
       require 'json'
