@@ -9,6 +9,7 @@ module KnifeCommunity
       require 'chef/config'
       require 'chef/cookbook_loader'
       require 'chef/knife/cookbook_site_share'
+      require 'chef/cookbook_site_streaming_uploader'
       require 'grit'
       require 'versionomy'
       require 'json'
