@@ -64,7 +64,7 @@ module KnifeCommunity
 
       share_new_version
 
-      ui.msg "Version #{@version} of the #{@cb_name} has been released!"
+      ui.msg "Version #{@version} of the #{@cb_name} cookbook has been released!"
       ui.msg "Check it out at http://ckbk.it/#{@cb_name}"
 
       # @TODO: Increment the current version to the next available odd number
