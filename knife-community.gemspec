@@ -27,15 +27,11 @@ Gem::Specification.new do |gem|
 
   gem.required_ruby_version = '>= 1.9.2'
 
-  gem.add_development_dependency 'rake', '~> 0.9'
-  gem.add_development_dependency 'rspec', '~> 2.11.0'
+  gem.add_development_dependency 'rake', '~> 10'
+  gem.add_development_dependency 'rspec', '~> 2.11'
   gem.add_development_dependency 'cucumber', '~> 1'
   gem.add_development_dependency 'aruba', '~> 0.4'
   gem.add_development_dependency 'tailor', '~> 1.1'
-  gem.add_development_dependency 'travis-lint', '~> 1.4'
-  gem.add_development_dependency 'guard', '~> 1.3'
-  gem.add_development_dependency 'guard-rspec', '~> 1.2'
-  gem.add_development_dependency 'guard-cucumber', '~> 1.2'
 
   gem.authors       = ["Mike Fiedler"]
   gem.email         = ["miketheman@gmail.com"]
