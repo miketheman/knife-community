@@ -78,10 +78,13 @@ module KnifeCommunity
       end
 
       if config[:site_share]
-        share_new_version
-
-        ui.msg "Version #{@version} of the #{@cb_name} cookbook has been released!"
-        ui.msg "Check it out at http://ckbk.it/#{@cb_name}"
+        confirm_share_msg  = "Shall I release version #{@version} of the"
+        confirm_share_msg << " #{@cb_name} cookbook to the community site? (Y/N) "
+        if config[:yes] || (ask_question(confirm_share_msg).chomp.upcase == "Y")
+          share_new_version
+          ui.msg "Version #{@version} of the #{@cb_name} cookbook has been released!"
+          ui.msg "Check it out at http://ckbk.it/#{@cb_name}"
+        end
       end
 
       # @TODO: Increment the current version to the next available odd number
