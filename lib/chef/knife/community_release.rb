@@ -40,6 +40,12 @@ module KnifeCommunity
       :boolean => true,
       :description => "Odd-numbered development cycle. Bump minor version & commit for development"
 
+    option :site_share,
+      :long => "--[no-]site-share",
+      :boolean => true,
+      :default => true,
+      :description => "Indicates whether the cookbook should be pushed to the community site."
+
     def run
       self.config = Chef::Config.merge!(config)
       validate_args
@@ -62,10 +68,12 @@ module KnifeCommunity
       git_push_commits
       git_push_tags
 
-      share_new_version
+      if config[:site_share]
+        share_new_version
 
-      ui.msg "Version #{@version} of the #{@cb_name} cookbook has been released!"
-      ui.msg "Check it out at http://ckbk.it/#{@cb_name}"
+        ui.msg "Version #{@version} of the #{@cb_name} cookbook has been released!"
+        ui.msg "Check it out at http://ckbk.it/#{@cb_name}"
+      end
 
       # @TODO: Increment the current version to the next available odd number
       # algo = n + 1 + (n % 2)
