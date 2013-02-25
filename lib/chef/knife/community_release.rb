@@ -40,6 +40,12 @@ module KnifeCommunity
       :boolean => true,
       :description => "Odd-numbered development cycle. Bump minor version & commit for development"
 
+    option :git_push,
+      :long => "--[no-]git-push",
+      :boolean => true,
+      :default => true,
+      :description => "Indicates whether the commits and tags should be pushed to pushed to the default git remote."
+
     option :site_share,
       :long => "--[no-]site-share",
       :boolean => true,
@@ -65,8 +71,11 @@ module KnifeCommunity
       set_new_cb_version
       commit_new_cb_version
       tag_new_cb_version
-      git_push_commits
-      git_push_tags
+
+      if config[:git_push]
+        git_push_commits
+        git_push_tags
+      end
 
       if config[:site_share]
         share_new_version
