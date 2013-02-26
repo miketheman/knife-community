@@ -70,11 +70,14 @@ Flags
 
     This is a flow that some adopt by having even-only numbered releases, utilizing the [odd numbered ones for development][wiki:oddver].
 
+There are other flags, run `knife community release -h` to see their specifications.
 
 Some good ideas while working on a cookbook
 -------------------------------------------
 
 Creating a `CHANGELOG.md` that details a short message about any changes included in each release is really helpful to anyone looking at your updated cookbook and seeing if it addresses a problem they have, without delving deeper into the code.
+
+See the CHANGELOG for this project to get an idea of how to write one.
 
 Updating a `TODO.md` file if there are outstanding known issues, planned work for the next version, etc. A TODO file also helps anyone else in the community try to tackle a problem you haven't figured out or gotten to yet, so they can issue a pull request for your cookbook.
 
