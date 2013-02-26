@@ -1,12 +1,12 @@
 #!/usr/bin/env rake
 require "bundler/gem_tasks"
 
-task :default => [:features]
+task :default => [:features, :tailor]
 
 # https://github.com/turboladen/tailor
 require 'tailor/rake_task'
 Tailor::RakeTask.new do |task|
-  task.file_set('lib/**/*.rb', 'code') do |style|
+  task.file_set 'lib/**/*.rb', :code do |style|
     style.max_line_length 160, level: :warn
   end
 end
