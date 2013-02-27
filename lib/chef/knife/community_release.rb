@@ -215,7 +215,7 @@ module KnifeCommunity
     def set_new_cb_version
       metadata_file = File.join(@cb_path, "metadata.rb")
       fi = File.read(metadata_file)
-      fi.gsub!(@cb_version.to_s, @version.to_s)
+      fi.gsub!(/version(\s+)('|")#{@cb_version.to_s}('|")/, "version\\1\\2#{@version.to_s}\\3")
       fo = File.open(metadata_file, 'w') { |file| file.puts fi }
     end
 
