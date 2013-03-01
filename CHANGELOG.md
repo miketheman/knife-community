@@ -1,3 +1,6 @@
+# v0.1.1 - March 1, 2013
+
+- BugFix: Version bumper was updating more than it should, in the case where a version string was found more than once in `metadata.rb`.
 
 # v0.1.0 - February 26, 2013
 
