@@ -87,10 +87,16 @@ module KnifeCommunity
         end
       end
 
-      # @TODO: Increment the current version to the next available odd number
-      # algo = n + 1 + (n % 2)
       if config[:devodd]
-        puts "I'm odd!"
+        if @version.tiny.even?
+          set_odd_cb_version
+          commit_odd_cb_version
+          if config[:git_push]
+            git_push_commits
+          end
+        else
+          puts "I'm already odd!"
+        end
       end
 
     end #run
@@ -228,6 +234,18 @@ module KnifeCommunity
 
     def tag_new_cb_version
       shellout("git tag -a -m 'release v#{@version}' #{@version}")
+    end
+
+    def set_odd_cb_version
+      metadata_file = File.join(@cb_path, "metadata.rb")
+      fi = File.read(metadata_file)
+      fi.gsub!(/version(\s+)('|")#{@version.to_s}('|")/, "version\\1\\2#{@version.bump(:tiny).to_s}\\3")
+      fo = File.open(metadata_file, 'w') { |file| file.puts fi }
+    end
+
+    def commit_odd_cb_version
+      shellout("git add metadata.rb")
+      @gitrepo.commit_index("increment version for development")
     end
 
     # Apparently Grit does not have any `push` semantics yet.
