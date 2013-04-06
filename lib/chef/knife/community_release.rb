@@ -52,12 +52,17 @@ module KnifeCommunity
       :default => true,
       :description => "Indicates whether the cookbook should be pushed to the community site."
 
-    def run
+    def setup
       self.config = Chef::Config.merge!(config)
       validate_args
       # Set variables for global use
       @cookbook = name_args.first
       @version = Versionomy.parse(name_args.last) if name_args.size > 1
+      return @cookbook, @version, config
+    end
+
+    def run
+      self.setup
 
       ui.msg "Starting to validate the envrionment before changing anything..."
       validate_cookbook_exists
