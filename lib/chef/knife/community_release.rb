@@ -185,6 +185,7 @@ module KnifeCommunity
       if @version.nil?
         @version = @cb_version.bump(:tiny)
         ui.msg "No version was specified, the new version will be #{@version}"
+        return @version
       end
       if @cb_version >= @version
         ui.error "The current version, #{@cb_version} is either greater or equal to the new version, #{@version}"
