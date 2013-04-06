@@ -46,6 +46,10 @@ module KnifeCommunity
       :default => true,
       :description => "Indicates whether the commits and tags should be pushed to pushed to the default git remote."
 
+    option :tag_prefix,
+      :long => "--tag-prefix TAGPREFIX",
+      :description => "Prefix for Git tag name, followed by version"
+
     option :site_share,
       :long => "--[no-]site-share",
       :boolean => true,
@@ -69,13 +73,14 @@ module KnifeCommunity
       validate_repo
       validate_repo_clean
       validate_version_sanity
-      validate_no_existing_tag
+      validate_no_existing_tag(get_tag_string)
+      # TODO: skip next step if --no-git-push is provided
       validate_target_remote_branch
 
       ui.msg "All validation steps have passed, making changes..."
       set_new_cb_version
       commit_new_cb_version
-      tag_new_cb_version
+      tag_new_cb_version(get_tag_string)
 
       if config[:git_push]
         git_push_commits
@@ -195,10 +200,10 @@ module KnifeCommunity
     end
 
     # Ensure that there isn't already a git tag for this version.
-    def validate_no_existing_tag
+    def validate_no_existing_tag(tag_string)
       existing_tags = Array.new
       @gitrepo.tags.each { |tag| existing_tags << tag.name }
-      if existing_tags.include?(@version.to_s)
+      if existing_tags.include?(tag_string)
         ui.error "This version tag has already been committed to the repo."
         ui.error "Are you sure you haven't released this already?"
         exit 6
@@ -232,8 +237,13 @@ module KnifeCommunity
       @gitrepo.commit_index("release v#{@version}")
     end
 
-    def tag_new_cb_version
-      shellout("git tag -a -m 'release v#{@version}' #{@version}")
+    # Returns the desired tag string, based on config option
+    def get_tag_string
+      config[:tag_prefix] ? "#{config[:tag_prefix]}#{@version.to_s}" : @version.to_s
+    end
+
+    def tag_new_cb_version(tag_string)
+      shellout("git tag -a -m 'release v#{@version}' #{tag_string}")
     end
 
     # Apparently Grit does not have any `push` semantics yet.
