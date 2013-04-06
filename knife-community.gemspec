@@ -19,7 +19,7 @@ Gem::Specification.new do |gem|
   # OPTIMIZE: Use Mixlib/Shellout until actions are written in pure ruby
   gem.add_dependency 'mixlib-shellout', '~> 1.1.0'
 
-  # Using Grit to examin git repo status, and interact with a git repo
+  # Using Grit to examine git repo status, and interact with a git repo
   gem.add_dependency 'grit', '~> 2'
 
   # A good version comparison library
@@ -32,7 +32,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'guard', '~> 1.6'
   gem.add_development_dependency 'rake', '~> 10'
   gem.add_development_dependency 'rspec', '~> 2.11'
-  gem.add_development_dependency 'tailor', '= 1.1.3' # See https://github.com/turboladen/tailor/issues/129
+  gem.add_development_dependency 'tailor', '~> 1.2'
 
   gem.authors       = ["Mike Fiedler"]
   gem.email         = ["miketheman@gmail.com"]
