@@ -18,6 +18,11 @@ Cucumber::Rake::Task.new(:features) do |t|
   t.cucumber_opts += ['--format pretty']
 end
 
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.rspec_opts = "--color"
+end
+
 # https://github.com/guard/guard
 require 'guard'
 desc "Start up guard, does not exit until told to with 'q'."
