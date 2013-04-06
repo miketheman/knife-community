@@ -1,7 +1,7 @@
 #!/usr/bin/env rake
 require "bundler/gem_tasks"
 
-task :default => [:features, :tailor]
+task :default => [:spec, :features, :tailor]
 
 # https://github.com/turboladen/tailor
 require 'tailor/rake_task'
