@@ -32,7 +32,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'guard', '~> 1.6'
   gem.add_development_dependency 'rake', '~> 10'
   gem.add_development_dependency 'rspec', '~> 2.11'
-  gem.add_development_dependency 'tailor', '= 1.1.3' # See https://github.com/turboladen/tailor/issues/129
+  gem.add_development_dependency 'tailor', '~> 1.2'
 
   gem.authors       = ["Mike Fiedler"]
   gem.email         = ["miketheman@gmail.com"]
