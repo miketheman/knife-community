@@ -19,5 +19,7 @@ doc/
 
 Gemfile.lock
 .rvmrc
+.ruby-gemset
+.ruby-version
 
 bin/
