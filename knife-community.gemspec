@@ -19,7 +19,7 @@ Gem::Specification.new do |gem|
   # OPTIMIZE: Use Mixlib/Shellout until actions are written in pure ruby
   gem.add_dependency 'mixlib-shellout', '~> 1.1.0'
 
-  # Using Grit to examin git repo status, and interact with a git repo
+  # Using Grit to examine git repo status, and interact with a git repo
   gem.add_dependency 'grit', '~> 2'
 
   # A good version comparison library
