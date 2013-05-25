@@ -10,3 +10,5 @@ env:
 matrix:
   allow_failures:
     - rvm: 2.0.0
+notifications:
+  webhooks: https://www.buildheroes.com/api/projects/d63f108036d7543765d6f237aa5c5dfa859b90c5/builds
