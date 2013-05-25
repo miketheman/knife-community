@@ -27,6 +27,11 @@ RSpec::Core::RakeTask.new(:spec) do |t|
   t.rspec_opts = "--color"
 end
 
+require 'cane/rake_task'
+Cane::RakeTask.new do |cane|
+  cane.canefile = './.cane'
+end
+
 # https://github.com/guard/guard
 require 'guard'
 desc "Start up guard, does not exit until told to with 'q'."
