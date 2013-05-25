@@ -1,18 +1,19 @@
 require 'chef/knife'
 
 module KnifeCommunity
+  # A Knife plugin to release cookbooks to the Opscode Community Site
   class CommunityRelease < Chef::Knife
 
     deps do
       require 'knife-community/version'
       require 'mixlib/shellout'
       require 'chef/config'
-      require 'chef/cookbook_loader'
       require 'chef/knife/cookbook_site_share'
       require 'chef/cookbook_site_streaming_uploader'
       require 'grit'
       require 'versionomy'
       require 'json'
+      require 'knife-community/cookbook_validator'
     end
 
     banner "knife community release COOKBOOK [VERSION] (options)"
@@ -69,9 +70,16 @@ module KnifeCommunity
       self.setup
 
       ui.msg "Starting to validate the envrionment before changing anything..."
-      validate_cookbook_exists
+      CookbookValidator.new(cookbook_name, cookbook_path, target_version).validate!
+
+      # cb = cookbook_loader.cookbooks_by_name[cookbook_name]
+      # @cb_path = cb.root_dir
+      # @cb_name = cb.metadata.name.to_s
+      # @cb_version = Versionomy.parse(cb.version)
+
       validate_repo
       validate_repo_clean
+
       validate_version_sanity
       validate_no_existing_tag(get_tag_string)
       # TODO: skip next step if --no-git-push is provided
@@ -129,27 +137,6 @@ module KnifeCommunity
       end
     end
 
-    # Re-used from Chef
-    def cookbook_loader
-      @cookbook_loader ||= Chef::CookbookLoader.new(config[:cookbook_path])
-    end
-
-    # Validate cookbook existence
-    # Since we can have cookbooks in paths that are not named the same as the directory, using
-    # a metadata entry to describe the cookbook is better. In its absence, uses the directory name.
-    #
-    # @return [String] @cb_path, a string with the root directory of the cookbook
-    # @return [String] @cb_name, a string with the cookbook's name, either from metadata or interpreted from directory
-    def validate_cookbook_exists
-      unless cookbook_loader.cookbook_exists?(@cookbook)
-        ui.error "Cannot find a cookbook named #{@cookbook} at #{config[:cookbook_path]}"
-        exit 2
-      end
-      cb = cookbook_loader.cookbooks_by_name[@cookbook]
-      @cb_path = cb.root_dir
-      @cb_name = cb.metadata.name.to_s
-      @cb_version = Versionomy.parse(cb.version)
-    end
 
     # Ensure that the cookbook is in a git repo
     # @TODO: Use Grit instead of shelling out.
