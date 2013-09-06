@@ -23,9 +23,7 @@ Cucumber::Rake::Task.new(:features) do |t|
 end
 
 require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new(:spec) do |t|
-  t.rspec_opts = "--color"
-end
+RSpec::Core::RakeTask.new(:spec)
 
 require 'cane/rake_task'
 Cane::RakeTask.new do |cane|
