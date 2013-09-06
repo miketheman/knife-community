@@ -5,7 +5,6 @@ module KnifeCommunity
   class CommunityRelease < Chef::Knife
 
     deps do
-      require 'knife-community/version'
       require 'mixlib/shellout'
       require 'chef/config'
       require 'chef/knife/cookbook_site_share'
@@ -13,7 +12,8 @@ module KnifeCommunity
       require 'grit'
       require 'versionomy'
       require 'json'
-      require 'knife-community/cookbook_validator'
+
+      require 'knife-community'
     end
 
     banner "knife community release COOKBOOK [VERSION] (options)"
