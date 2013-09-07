@@ -1,5 +1,4 @@
 # -*- encoding: utf-8 -*-
-chef_version = ENV.key?('CHEF_VERSION') ? ENV['CHEF_VERSION'] : ['>= 10', '<= 12']
 require File.expand_path('../lib/knife-community/version', __FILE__)
 
 Gem::Specification.new do |gem|
@@ -14,7 +13,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  gem.add_dependency 'chef', chef_version
+  gem.add_dependency 'chef', '>= 10.12'
 
   # OPTIMIZE: Use Mixlib/Shellout until actions are written in pure ruby
   gem.add_dependency 'mixlib-shellout', '~> 1.1.0'

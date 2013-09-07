@@ -3,6 +3,12 @@ require "bundler/gem_tasks"
 
 task :default => [:spec, :features, :tailor, :cane]
 
+begin
+  require 'appraisal'
+rescue LoadError
+  puts 'Unable to load appraisal gem - will test against only latest version of the dependency.' unless ENV['CI']
+end
+
 require 'tailor/rake_task'
 Tailor::RakeTask.new do |task|
   task.file_set 'lib/**/*.rb', :code do |style|
