@@ -7,6 +7,7 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{A Knife plugin to assist with deploying completed Chef cookbooks to the Community Site}
   gem.description   = %q{The centralized location for sharing cookbooks is the Community Site, this is a process helper to produce a repeatable method for releasing cookbooks.}
   gem.version       = KnifeCommunity::VERSION
+  gem.license       = "MIT"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
