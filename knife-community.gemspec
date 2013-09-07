@@ -16,7 +16,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'chef', '>= 10.12'
 
   # OPTIMIZE: Use Mixlib/Shellout until actions are written in pure ruby
-  gem.add_dependency 'mixlib-shellout', '~> 1.1.0'
+  gem.add_dependency 'mixlib-shellout', '~> 1.1'
 
   # Using Grit to examine git repo status, and interact with a git repo
   gem.add_dependency 'grit', '~> 2'
