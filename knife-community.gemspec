@@ -20,7 +20,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'mixlib-shellout', '~> 1.1'
 
   # Using Grit to examine git repo status, and interact with a git repo
-  gem.add_dependency 'grit', '~> 2'
+  gem.add_dependency 'grit', '~> 2.5'
 
   # A good version comparison library
   gem.add_dependency 'versionomy', '~> 0.4'
@@ -30,9 +30,9 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'aruba', '~> 0.4'
   gem.add_development_dependency 'cane', '~> 2.5'
   gem.add_development_dependency 'countloc', '~> 0.4'
-  gem.add_development_dependency 'cucumber', '~> 1'
+  gem.add_development_dependency 'cucumber', '~> 1.0'
   gem.add_development_dependency 'guard', '~> 1.6'
-  gem.add_development_dependency 'rake', '~> 10'
+  gem.add_development_dependency 'rake', '~> 10.0'
   gem.add_development_dependency 'rspec', '~> 2.11'
   gem.add_development_dependency 'simplecov', '~> 0.7'
   gem.add_development_dependency 'tailor', '~> 1.2'
