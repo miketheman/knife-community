@@ -31,6 +31,14 @@ Cane::RakeTask.new do |t|
 end
 
 # https://github.com/guard/guard
+desc "Display LOC stats"
+task :stats do
+  puts "\n## Production Code Stats"
+  sh "countloc -r lib"
+  puts "\n## Test Code Stats"
+  sh "countloc -r spec"
+end
+
 require 'guard'
 desc "Start up guard, does not exit until told to with 'q'."
 task :guard do
