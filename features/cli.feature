@@ -10,3 +10,11 @@ Scenario: Running with no arguments produces a failure
 Scenario: Running with too many arguments produces a failure
   When I run `knife community release foo bar baz`
   Then the exit status should be 1
+
+Scenario: Running with the help flag shows the usage information
+  When I run `knife community release --help`
+  Then the exit status should be 1
+  And the output should contain:
+  """
+  knife community release COOKBOOK [VERSION] (options)
+  """
