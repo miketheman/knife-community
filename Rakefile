@@ -3,7 +3,6 @@ require "bundler/gem_tasks"
 
 task :default => [:spec, :features, :tailor, :cane]
 
-# https://github.com/turboladen/tailor
 require 'tailor/rake_task'
 Tailor::RakeTask.new do |task|
   task.file_set 'lib/**/*.rb', :code do |style|
@@ -30,7 +29,6 @@ Cane::RakeTask.new do |t|
   t.canefile = './.cane'
 end
 
-# https://github.com/guard/guard
 desc "Display LOC stats"
 task :stats do
   puts "\n## Production Code Stats"
@@ -50,7 +48,7 @@ end
 # File lib/tasks/notes.rake
 desc "Find notes in code"
 task :notes do
-  puts `grep --exclude=Rakefile -r 'OPTIMIZE:\\|FIXME:\\|TODO:' .`
+  puts `grep --exclude=Rakefile -r 'OPTIMIZE:\\|FIXME:\\|TODO:\\|NOTE:' .`
 end
 
 # Clean up any artefacts
