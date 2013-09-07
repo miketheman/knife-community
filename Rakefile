@@ -1,7 +1,7 @@
 #!/usr/bin/env rake
 require "bundler/gem_tasks"
 
-task :default => [:spec, :features, :tailor]
+task :default => [:spec, :features, :tailor, :cane]
 
 # https://github.com/turboladen/tailor
 require 'tailor/rake_task'
@@ -26,8 +26,8 @@ require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
 
 require 'cane/rake_task'
-Cane::RakeTask.new do |cane|
-  cane.canefile = './.cane'
+Cane::RakeTask.new do |t|
+  t.canefile = './.cane'
 end
 
 # https://github.com/guard/guard
