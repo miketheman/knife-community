@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start
+
 require 'rspec'
 # Load any custom matchers
 Dir[File.dirname(__FILE__) + "/support/**/*.rb"].each { |f| require f }

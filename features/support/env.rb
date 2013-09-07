@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start
+
 # Set up the environment for testing
 require 'aruba/cucumber'
 
