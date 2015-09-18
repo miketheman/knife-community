@@ -1,12 +1,11 @@
 knife-community
 ===============
-[![Gem Version](https://badge.fury.io/rb/knife-community.png)](http://badge.fury.io/rb/knife-community)
-[![Build Status](https://secure.travis-ci.org/miketheman/knife-community.png?branch=master)](http://travis-ci.org/miketheman/knife-community)
-[![Dependency Status](https://gemnasium.com/miketheman/knife-community.png)](https://gemnasium.com/miketheman/knife-community)
-[![BuildHeroes](https://www.buildheroes.com/projects/knife-role-spaghetti.png)](https://www.buildheroes.com/projects/knife-role-spaghetti)
-[![Code Climate](https://codeclimate.com/github/miketheman/knife-community.png)](https://codeclimate.com/github/miketheman/knife-community)
+[![Gem Version](https://badge.fury.io/rb/knife-community.svg)](http://badge.fury.io/rb/knife-community)
+[![Build Status](https://travis-ci.org/miketheman/knife-community.svg?branch=master)](http://travis-ci.org/miketheman/knife-community)
+[![Dependency Status](https://gemnasium.com/miketheman/knife-community.svg)](https://gemnasium.com/miketheman/knife-community)
+[![Code Climate](https://codeclimate.com/github/miketheman/knife-community/badges/gpa.svg)](https://codeclimate.com/github/miketheman/knife-community)
 
-A Knife plugin to assist with deploying completed Chef cookbooks to the Community Site
+A Knife plugin to assist with deploying completed Chef cookbooks to the Chef Supermarket.
 
 Intro
 -----
@@ -16,9 +15,9 @@ Apt has 'deb', Yum has 'rpm', Node has 'npm', RubyGems has 'gem', Java has 'jar'
 
 In The Land of [Chef][chef], the typical unit of shareable software is a 'cookbook'.
 
-The centralized location for sharing cookbooks is the [Community Site][opcs], and we already have support to download/install these elements, either it be through [knife itself][kcsi], [librarian][libr], and [berkshelf][brks], and there are probably others.
+The centralized location for sharing cookbooks is the [Supermarket][opcs], and we already have support to download/install these elements, either it be through [knife itself][kcsi], [librarian][libr], and [berkshelf][brks], and there are probably others.
 
-What we _don't_ have is a good method for cookbook maintainers to contribute back to the Community Site, while semi-enforcing good habits, such as version incrementing, git tags and forming the package correctly.
+What we _don't_ have is a good method for cookbook maintainers to contribute back to the Supermarket, while semi-enforcing good habits, such as version incrementing, git tags and forming the package correctly.
 
 Assumptions
 -----------
@@ -45,7 +44,7 @@ Assuming you have made your changes, tested your code thoroughly (one can hope!)
 1. Create a git commit for the `metadata.rb` change.
 1. Create a git tag with the version number (no leading "v" or the like)
 1. Push all commits/tags to the set remote, typically like `git push origin master`. Override with `--branch`
-1. Create a 'package' - effectively a compressed tarball - and upload it to the community site
+1. Create a 'package' - effectively a compressed tarball - and upload it to the Supermarket
 1. Have a beer, or glass of wine - you choose.
 
 This flow can probably be used for most cookbook maintainers.
@@ -90,10 +89,10 @@ Test, test, test. And then test again.
 
 
 [brks]: http://berkshelf.com/
-[chef]: http://www.opscode.com/chef/
-[kcsi]: http://wiki.opscode.com/display/chef/Managing+Cookbooks+With+Knife#ManagingCookbooksWithKnife-CookbookSite
+[chef]: https://www.chef.io/chef/
+[kcsi]: https://docs.chef.io/#ManagingCookbooksWithKnife-CookbookSite
 [libr]: https://github.com/applicationsonline/librarian
-[opcs]: http://community.opscode.com/
+[opcs]: https://supermarket.chef.io/dashboard
 [semver]: http://semver.org/
 [wiki:apppkg]: http://en.wikipedia.org/wiki/List_of_software_package_management_systems#Application-level_package_managers
 [wiki:oddver]: http://en.wikipedia.org/wiki/Software_versioning#Odd-numbered_versions_for_development_releases
