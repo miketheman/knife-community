@@ -5,7 +5,6 @@ group :localdev do
   gem 'appraisal', '~> 0.5.2'
   gem 'guard-cucumber', '~> 1.2'
   gem 'guard-rspec', '~> 2.4'
-  gem 'travis-lint', '~> 1.4'
 end
 
 # Specify your gem's dependencies in knife-community.gemspec
