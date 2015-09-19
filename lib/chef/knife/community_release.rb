@@ -80,14 +80,15 @@ module KnifeCommunity
       validate_repo_clean
 
       validate_version_sanity
-      validate_no_existing_tag(get_tag_string)
+      validate_no_existing_tag(tag_string)
+
       # TODO: skip next step if --no-git-push is provided
       validate_target_remote_branch
 
       ui.msg 'All validation steps have passed, making changes...'
       set_new_cb_version
       commit_new_cb_version
-      tag_new_cb_version(get_tag_string)
+      tag_new_cb_version(tag_string)
 
       if config[:git_push]
         git_push_commits
@@ -210,7 +211,7 @@ module KnifeCommunity
     end
 
     # Returns the desired tag string, based on config option
-    def get_tag_string
+    def tag_string
       config[:tag_prefix] ? "#{config[:tag_prefix]}#{@version.to_s}" : @version.to_s
     end
 

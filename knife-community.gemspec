@@ -30,7 +30,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'cucumber', '~> 1.0'
   gem.add_development_dependency 'guard', '~> 1.6'
   gem.add_development_dependency 'rake', '~> 10.0'
-  gem.add_development_dependency 'rspec', '~> 2.11'
+  gem.add_development_dependency 'rspec', '~> 3.3.0'
   gem.add_development_dependency 'rubocop', '~> 0.34.1'
   gem.add_development_dependency 'simplecov', '~> 0.7'
 
