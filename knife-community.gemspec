@@ -4,8 +4,8 @@ require File.expand_path('../lib/knife-community/version', __FILE__)
 Gem::Specification.new do |gem|
 
   gem.name          = "knife-community"
-  gem.summary       = %q{A Knife plugin to assist with deploying completed Chef cookbooks to the Community Site}
-  gem.description   = %q{The centralized location for sharing cookbooks is the Community Site, this is a process helper to produce a repeatable method for releasing cookbooks.}
+  gem.summary       = %q{A Knife plugin to assist with deploying completed Chef cookbooks to the Chef Supermarket}
+  gem.description   = %q{The centralized location for sharing cookbooks is the Chef Supermarket, this is a process helper to produce a repeatable method for releasing cookbooks.}
   gem.version       = KnifeCommunity::VERSION
   gem.license       = "MIT"
 

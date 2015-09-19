@@ -1,7 +1,7 @@
 require 'chef/knife'
 
 module KnifeCommunity
-  # A Knife plugin to release cookbooks to the Opscode Community Site
+  # A Knife plugin to release cookbooks to the Chef Supermarket
   class CommunityRelease < Chef::Knife
 
     deps do
@@ -55,7 +55,7 @@ module KnifeCommunity
       :long => "--[no-]site-share",
       :boolean => true,
       :default => true,
-      :description => "Indicates whether the cookbook should be pushed to the community site."
+      :description => "Indicates whether the cookbook should be pushed to the Chef Supermarket."
 
     def setup
       self.config = Chef::Config.merge!(config)
@@ -97,7 +97,7 @@ module KnifeCommunity
 
       if config[:site_share]
         confirm_share_msg  = "Shall I release version #{@version} of the"
-        confirm_share_msg << " #{@cb_name} cookbook to the community site? (Y/N) "
+        confirm_share_msg << " #{@cb_name} cookbook to the Supermarket? (Y/N) "
         if config[:yes] || (ask_question(confirm_share_msg).chomp.upcase == "Y")
           share_new_version
           ui.msg "Version #{@version} of the #{@cb_name} cookbook has been released!"
@@ -262,7 +262,7 @@ module KnifeCommunity
 
     def share_new_version
       # Need to find the existing cookbook's category. Thankfully, this is readily available via REST/JSON.
-      response = Net::HTTP.get_response("cookbooks.opscode.com", "/api/v1/cookbooks/#{@cb_name}")
+      response = Net::HTTP.get_response("supermarket.chef.io", "/api/v1/cookbooks/#{@cb_name}")
       category = JSON.parse(response.body)['category'] ||= "Other"
 
       cb_share = Chef::Knife::CookbookSiteShare.new
