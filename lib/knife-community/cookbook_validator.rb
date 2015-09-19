@@ -25,8 +25,6 @@ module KnifeCommunity
 
     # Since we can have cookbooks in paths that are not named the same as the
     # directory, using a metadata entry to describe the cookbook is better.
-    # In its absence, uses the directory name. We inherit this behavior from
-    # CookbookLoader.
     #
     # @raise [CookbookNotFoundInRepo] if the cookbook cannot be found in the path
     def validate_cookbook_exists

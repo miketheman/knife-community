@@ -40,12 +40,24 @@ describe KnifeCommunity::CookbookValidator do
       expect { cv.validate! }.to_not raise_error
     end
 
-    it 'passes on a cookbook with no name in metadata.rb' do
-      cv = KnifeCommunity::CookbookValidator.new(
-        'maf-test2', @repo_paths, '0.2.1'
-      )
+    describe 'Chef 11 and prior', unless: CHEF_12_OR_HIGHER do
+      it 'passes an on a cookbook with no name in metadata.rb' do
+        cv = KnifeCommunity::CookbookValidator.new(
+          'maf-test2', @repo_paths, '0.2.1'
+        )
 
-      expect { cv.validate! }.to_not raise_error
+        expect { cv.validate! }.to_not raise_error
+      end
+    end
+
+    describe 'Chef 12 and later', if: CHEF_12_OR_HIGHER do
+      it 'raises an on a cookbook with no name in metadata.rb' do
+        cv = KnifeCommunity::CookbookValidator.new(
+          'maf-test2', @repo_paths, '0.2.1'
+        )
+
+        expect { cv.validate! }.to raise_error(Chef::Exceptions::MetadataNotValid)
+      end
     end
 
     it 'returns an error when specifying a non-existing cookbook' do
