@@ -62,7 +62,7 @@ module KnifeCommunity
       # Set variables for global use
       @cookbook = name_args.first
       @version = Versionomy.parse(name_args.last) if name_args.size > 1
-      return @cookbook, @version, config
+      [@cookbook, @version, config]
     end
 
     def run
@@ -199,7 +199,7 @@ module KnifeCommunity
     def set_new_cb_version
       metadata_file = File.join(@cb_path, 'metadata.rb')
       fi = File.read(metadata_file)
-      fi.gsub!(/version(\s+)('|")#{@cb_version.to_s}('|")/, "version\\1\\2#{@version.to_s}\\3")
+      fi.gsub!(/version(\s+)('|")#{@cb_version.to_s}('|")/, "version\\1\\2#{@version}\\3")
       File.open(metadata_file, 'w') { |file| file.puts fi }
     end
 
@@ -212,7 +212,7 @@ module KnifeCommunity
 
     # Returns the desired tag string, based on config option
     def tag_string
-      config[:tag_prefix] ? "#{config[:tag_prefix]}#{@version.to_s}" : @version.to_s
+      config[:tag_prefix] ? "#{config[:tag_prefix]}#{@version}" : @version.to_s
     end
 
     def tag_new_cb_version(tag_string)
@@ -222,7 +222,7 @@ module KnifeCommunity
     def set_odd_cb_version
       metadata_file = File.join(@cb_path, 'metadata.rb')
       fi = File.read(metadata_file)
-      fi.gsub!(/version(\s+)('|")#{@version.to_s}('|")/, "version\\1\\2#{@version.bump(:tiny).to_s}\\3")
+      fi.gsub!(/version(\s+)('|")#{@version.to_s}('|")/, "version\\1\\2#{@version.bump(:tiny)}\\3")
       File.open(metadata_file, 'w') { |file| file.puts fi }
     end
 

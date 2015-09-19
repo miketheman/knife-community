@@ -42,9 +42,9 @@ module KnifeCommunity
       cb = cookbook_loader.cookbooks_by_name[cookbook_name]
 
       if Versionomy.parse(cb.version) >= Versionomy.parse(target_version)
-        raise Chef::Exceptions::InvalidCookbookVersion,
-          "The current version, #{cb.version} is either greater or equal to the new version, #{target_version} " +
-            "For your own sanity, don't release historical cookbooks into the wild."
+        fail Chef::Exceptions::InvalidCookbookVersion,
+             "The current version, #{cb.version} is either greater or equal to the new version, #{target_version} " \
+               "For your own sanity, don't release historical cookbooks into the wild."
       end
     end
   end # class CookbookValidator
