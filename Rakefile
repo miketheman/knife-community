@@ -1,7 +1,10 @@
 #!/usr/bin/env rake
 require "bundler/gem_tasks"
+require 'rake/clean'
 
 task :default => [:spec, :features]
+CLEAN.include %w(coverage/ pkg/ tmp/)
+CLOBBER.include %w(doc/ Gemfile.lock)
 
 begin
   require 'appraisal'
@@ -39,12 +42,4 @@ end
 desc "Find notes in code"
 task :notes do
   puts `grep --exclude=Rakefile -r 'OPTIMIZE:\\|FIXME:\\|TODO:\\|NOTE:' .`
-end
-
-# Clean up any artefacts
-desc "Clean up dev environment cruft like tmp and packages"
-task :clean do
-  %w{pkg tmp}.each do |subdir|
-    FileUtils.rm_rf(subdir)
-  end
 end
