@@ -23,16 +23,16 @@ Gem::Specification.new do |gem|
   # A good version comparison library
   gem.add_dependency 'versionomy', '~> 0.4'
 
-  gem.required_ruby_version = '>= 1.9.2'
+  gem.required_ruby_version = '>= 1.9.3'
 
-  gem.add_development_dependency 'aruba', '~> 0.4'
+  gem.add_development_dependency 'aruba', '~> 0.9'
   gem.add_development_dependency 'countloc', '~> 0.4'
-  gem.add_development_dependency 'cucumber', '~> 1.0'
-  gem.add_development_dependency 'guard', '~> 1.6'
-  gem.add_development_dependency 'rake', '~> 10.0'
+  gem.add_development_dependency 'cucumber', '~> 2.1'
+  gem.add_development_dependency 'guard', '~> 2.13'
+  gem.add_development_dependency 'rake', '~> 10.4'
   gem.add_development_dependency 'rspec', '~> 3.3.0'
   gem.add_development_dependency 'rubocop', '~> 0.34.1'
-  gem.add_development_dependency 'simplecov', '~> 0.7'
+  gem.add_development_dependency 'simplecov', '~> 0.10'
 
   gem.authors       = ['Mike Fiedler']
   gem.email         = ['miketheman@gmail.com']
