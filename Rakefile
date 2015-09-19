@@ -1,7 +1,7 @@
 #!/usr/bin/env rake
 require "bundler/gem_tasks"
 
-task :default => [:spec, :features, :tailor, :cane]
+task :default => [:spec, :features, :tailor]
 
 begin
   require 'appraisal'
@@ -29,11 +29,6 @@ end
 
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
-
-require 'cane/rake_task'
-Cane::RakeTask.new do |t|
-  t.canefile = './.cane'
-end
 
 desc "Display LOC stats"
 task :stats do

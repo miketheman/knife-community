@@ -28,7 +28,6 @@ Gem::Specification.new do |gem|
   gem.required_ruby_version = '>= 1.9.2'
 
   gem.add_development_dependency 'aruba', '~> 0.4'
-  gem.add_development_dependency 'cane', '~> 2.5'
   gem.add_development_dependency 'countloc', '~> 0.4'
   gem.add_development_dependency 'cucumber', '~> 1.0'
   gem.add_development_dependency 'guard', '~> 1.6'
