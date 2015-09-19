@@ -1,7 +1,7 @@
 #!/usr/bin/env rake
 require "bundler/gem_tasks"
 
-task :default => [:spec, :features, :tailor]
+task :default => [:spec, :features]
 
 begin
   require 'appraisal'
@@ -9,17 +9,6 @@ rescue LoadError
   puts 'Unable to load appraisal gem - will test against only latest version of the dependency.' unless ENV['CI']
 end
 
-require 'tailor/rake_task'
-Tailor::RakeTask.new do |task|
-  task.file_set 'lib/**/*.rb', :code do |style|
-    style.max_line_length 160, level: :warn
-    style.max_code_lines_in_method 40, level: :warn
-  end
-  task.file_set 'spec/**/*.rb', :tests do |style|
-    style.max_line_length 160, level: :warn
-    style.max_code_lines_in_method 40, level: :warn
-  end
-end
 
 require 'cucumber/rake/task'
 Cucumber::Rake::Task.new(:features) do |t|
