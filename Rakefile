@@ -6,11 +6,6 @@ task :default => [:spec, :features]
 CLEAN.include %w(coverage/ pkg/ tmp/)
 CLOBBER.include %w(doc/ Gemfile.lock)
 
-begin
-  require 'appraisal'
-rescue LoadError
-  puts 'Unable to load appraisal gem - will test against only latest version of the dependency.' unless ENV['CI']
-end
 
 
 require 'cucumber/rake/task'

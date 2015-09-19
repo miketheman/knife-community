@@ -4,4 +4,11 @@ source "https://rubygems.org"
 
 gem "chef", "~> 10.0"
 
-gemspec :path=>"../"
+group :localdev do
+  gem "appraisal", "~> 2.1.0"
+  gem "guard-cucumber", "~> 1.6"
+  gem "guard-rspec", "~> 4.6"
+  gem "guard-rubocop", "~> 1.2"
+end
+
+gemspec :path => "../"

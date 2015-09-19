@@ -11,3 +11,4 @@ bundler_args: --without=localdev
 gemfile:
   - gemfiles/chef_10_latest.gemfile
   - gemfiles/chef_11_latest.gemfile
+  - gemfiles/chef_12_latest.gemfile
