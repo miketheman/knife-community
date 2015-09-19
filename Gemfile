@@ -5,6 +5,7 @@ group :localdev do
   gem 'appraisal', '~> 2.1.0'
   gem 'guard-cucumber', '~> 1.2'
   gem 'guard-rspec', '~> 2.4'
+  gem 'guard-rubocop', '~> 1.2'
 end
 
 # Specify your gem's dependencies in knife-community.gemspec

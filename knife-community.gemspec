@@ -1,18 +1,16 @@
-# -*- encoding: utf-8 -*-
 require File.expand_path('../lib/knife-community/version', __FILE__)
 
 Gem::Specification.new do |gem|
-
-  gem.name          = "knife-community"
-  gem.summary       = %q{A Knife plugin to assist with deploying completed Chef cookbooks to the Chef Supermarket}
-  gem.description   = %q{The centralized location for sharing cookbooks is the Chef Supermarket, this is a process helper to produce a repeatable method for releasing cookbooks.}
+  gem.name          = 'knife-community'
+  gem.summary       = 'A Knife plugin to assist with deploying completed Chef cookbooks to the Chef Supermarket'
+  gem.description   = 'The centralized location for sharing cookbooks is the Chef Supermarket, this is a process helper to produce a repeatable method for releasing cookbooks.'
   gem.version       = KnifeCommunity::VERSION
-  gem.license       = "MIT"
+  gem.license       = 'MIT'
 
-  gem.files         = `git ls-files`.split($\)
-  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
+  gem.files         = `git ls-files`.split("\n")
+  gem.executables   = gem.files.grep(%r{^bin/}).map { |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
-  gem.require_paths = ["lib"]
+  gem.require_paths = ['lib']
 
   gem.add_dependency 'chef', '>= 10.12'
 
@@ -33,10 +31,10 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'guard', '~> 1.6'
   gem.add_development_dependency 'rake', '~> 10.0'
   gem.add_development_dependency 'rspec', '~> 2.11'
+  gem.add_development_dependency 'rubocop', '~> 0.34.1'
   gem.add_development_dependency 'simplecov', '~> 0.7'
 
-  gem.authors       = ["Mike Fiedler"]
-  gem.email         = ["miketheman@gmail.com"]
-  gem.homepage      = "http://miketheman.github.com/knife-community"
-
+  gem.authors       = ['Mike Fiedler']
+  gem.email         = ['miketheman@gmail.com']
+  gem.homepage      = 'http://miketheman.github.com/knife-community'
 end

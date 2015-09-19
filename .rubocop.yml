@@ -1,0 +1,24 @@
+# Style guide for this project
+# TODO: Address items in the todo file when refactoring
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  Include:
+    - Appraisals
+    - Gemfile
+    - Guardfile
+    - Rakefile
+    - lib/
+    - knife-community.gemspec
+    - spec/
+  Exclude:
+    - gemfiles/
+
+Metrics/LineLength:
+  Max: 180
+
+Style/FileName:
+  Enabled: false
+
+RegexpLiteral:
+  Enabled: false

@@ -4,7 +4,6 @@ require 'versionomy'
 module KnifeCommunity
   # Looks at a cookbook
   class CookbookValidator
-
     attr_reader :cookbook_name, :cookbook_path, :target_version
 
     def initialize(cookbook_name, cookbook_path, target_version)
@@ -32,8 +31,8 @@ module KnifeCommunity
     # @raise [CookbookNotFoundInRepo] if the cookbook cannot be found in the path
     def validate_cookbook_exists
       unless cookbook_loader.cookbook_exists?(cookbook_name)
-        raise Chef::Exceptions::CookbookNotFoundInRepo,
-          "Cannot find a cookbook named #{cookbook_name} at #{cookbook_path}"
+        fail Chef::Exceptions::CookbookNotFoundInRepo,
+             "Cannot find a cookbook named #{cookbook_name} at #{cookbook_path}"
       end
     end
 
@@ -47,8 +46,6 @@ module KnifeCommunity
           "The current version, #{cb.version} is either greater or equal to the new version, #{target_version} " +
             "For your own sanity, don't release historical cookbooks into the wild."
       end
-
     end
-
   end # class CookbookValidator
 end # module

@@ -3,7 +3,6 @@ require 'chef/knife'
 module KnifeCommunity
   # A Knife plugin to release cookbooks to the Chef Supermarket
   class CommunityRelease < Chef::Knife
-
     deps do
       require 'mixlib/shellout'
       require 'chef/config'
@@ -16,46 +15,46 @@ module KnifeCommunity
       require 'knife-community'
     end
 
-    banner "knife community release COOKBOOK [VERSION] (options)"
+    banner 'knife community release COOKBOOK [VERSION] (options)'
 
     option :cookbook_path,
-      :short => "-o PATH:PATH",
-      :long => "--cookbook-path PATH:PATH",
-      :description => "A colon-separated path to look for cookbooks in",
-      :proc => lambda { |o| o.split(":") }
+           short: '-o PATH:PATH',
+           long: '--cookbook-path PATH:PATH',
+           description: 'A colon-separated path to look for cookbooks in',
+           proc: ->(o) { o.split(':') }
 
     option :remote,
-      :short => "-R REMOTE",
-      :long => "--remote REMOTE",
-      :default => "origin",
-      :description => "Remote Git repository to push to"
+           short: '-R REMOTE',
+           long: '--remote REMOTE',
+           default: 'origin',
+           description: 'Remote Git repository to push to'
 
     option :branch,
-      :short => "-B ",
-      :long => "--branch BRANCH",
-      :default => "master",
-      :description => "Remote Git branch name to push to"
+           short: '-B ',
+           long: '--branch BRANCH',
+           default: 'master',
+           description: 'Remote Git branch name to push to'
 
     option :devodd,
-      :long => "--devodd",
-      :boolean => true,
-      :description => "Odd-numbered development cycle. Bump minor version & commit for development"
+           long: '--devodd',
+           boolean: true,
+           description: 'Odd-numbered development cycle. Bump minor version & commit for development'
 
     option :git_push,
-      :long => "--[no-]git-push",
-      :boolean => true,
-      :default => true,
-      :description => "Indicates whether the commits and tags should be pushed to pushed to the default git remote."
+           long: '--[no-]git-push',
+           boolean: true,
+           default: true,
+           description: 'Indicates whether the commits and tags should be pushed to pushed to the default git remote.'
 
     option :tag_prefix,
-      :long => "--tag-prefix TAGPREFIX",
-      :description => "Prefix for Git tag name, followed by version"
+           long: '--tag-prefix TAGPREFIX',
+           description: 'Prefix for Git tag name, followed by version'
 
     option :site_share,
-      :long => "--[no-]site-share",
-      :boolean => true,
-      :default => true,
-      :description => "Indicates whether the cookbook should be pushed to the Chef Supermarket."
+           long: '--[no-]site-share',
+           boolean: true,
+           default: true,
+           description: 'Indicates whether the cookbook should be pushed to the Chef Supermarket.'
 
     def setup
       self.config = Chef::Config.merge!(config)
@@ -67,9 +66,9 @@ module KnifeCommunity
     end
 
     def run
-      self.setup
+      setup
 
-      ui.msg "Starting to validate the envrionment before changing anything..."
+      ui.msg 'Starting to validate the envrionment before changing anything...'
       CookbookValidator.new(cookbook_name, cookbook_path, target_version).validate!
 
       # cb = cookbook_loader.cookbooks_by_name[cookbook_name]
@@ -85,7 +84,7 @@ module KnifeCommunity
       # TODO: skip next step if --no-git-push is provided
       validate_target_remote_branch
 
-      ui.msg "All validation steps have passed, making changes..."
+      ui.msg 'All validation steps have passed, making changes...'
       set_new_cb_version
       commit_new_cb_version
       tag_new_cb_version(get_tag_string)
@@ -96,9 +95,9 @@ module KnifeCommunity
       end
 
       if config[:site_share]
-        confirm_share_msg  = "Shall I release version #{@version} of the"
+        confirm_share_msg = "Shall I release version #{@version} of the"
         confirm_share_msg << " #{@cb_name} cookbook to the Supermarket? (Y/N) "
-        if config[:yes] || (ask_question(confirm_share_msg).chomp.upcase == "Y")
+        if config[:yes] || (ask_question(confirm_share_msg).chomp.upcase == 'Y')
           share_new_version
           ui.msg "Version #{@version} of the #{@cb_name} cookbook has been released!"
           ui.msg "Check it out at http://ckbk.it/#{@cb_name}"
@@ -109,15 +108,13 @@ module KnifeCommunity
         if @version.tiny.even?
           set_odd_cb_version
           commit_odd_cb_version
-          if config[:git_push]
-            git_push_commits
-          end
+
+          git_push_commits if config[:git_push]
         else
           puts "I'm already odd!"
         end
       end
-
-    end #run
+    end # run
 
     private
 
@@ -126,17 +123,16 @@ module KnifeCommunity
     # @param [Array] the global `name_args` object
     def validate_args
       if name_args.size < 1
-        ui.error("No cookbook has been specified")
+        ui.error('No cookbook has been specified')
         show_usage
         exit 1
       end
       if name_args.size > 2
-        ui.error("Too many arguments are being passed. Please verify.")
+        ui.error('Too many arguments are being passed. Please verify.')
         show_usage
         exit 1
       end
     end
-
 
     # Ensure that the cookbook is in a git repo
     # @TODO: Use Grit instead of shelling out.
@@ -146,12 +142,10 @@ module KnifeCommunity
     # @example
     #  "/Users/miketheman/git/knife-community"
     def validate_repo
-      begin
-        @repo_root = shellout("git rev-parse --show-toplevel").stdout.chomp
-      rescue Exception => e
-        ui.error "There doesn't seem to be a git repo at #{@cb_path}\n#{e}"
-        exit 3
-      end
+      @repo_root = shellout('git rev-parse --show-toplevel').stdout.chomp
+    rescue Exception => e
+      ui.error "There doesn't seem to be a git repo at #{@cb_path}\n#{e}"
+      exit 3
     end
 
     # Inspect the cookbook directory's git status is good to push.
@@ -161,43 +155,28 @@ module KnifeCommunity
     def validate_repo_clean
       @gitrepo = Grit::Repo.new(@repo_root)
       status = @gitrepo.status
-      if !status.changed.nil? or status.changed.size != 0 # This has to be a convoluted way to determine a non-empty...
+      if !status.changed.nil? || status.changed.size != 0 # This has to be a convoluted way to determine a non-empty...
         # Test each for the magic sha_index. Ref: https://github.com/mojombo/grit/issues/142
         status.changed.each do |file|
           case file[1].sha_index
-          when "0" * 40
-            ui.error "There seem to be unstaged changes in your repo. Either stash or add them."
+          when '0' * 40
+            ui.error 'There seem to be unstaged changes in your repo. Either stash or add them.'
             exit 4
           else
-            ui.msg "There are modified files that have been staged, and will be included in the push."
+            ui.msg 'There are modified files that have been staged, and will be included in the push.'
           end
         end
       elsif status.untracked.size > 0
-        ui.warn "There are untracked files in your repo. You might want to look into that."
-      end
-    end
-
-    # Ensure that the version specified is larger than the current version
-    # If a version wasn't specified on the command line, increment the current by one tiny.
-    def validate_version_sanity
-      if @version.nil?
-        @version = @cb_version.bump(:tiny)
-        ui.msg "No version was specified, the new version will be #{@version}"
-        return @version
-      end
-      if @cb_version >= @version
-        ui.error "The current version, #{@cb_version} is either greater or equal to the new version, #{@version}"
-        ui.error "For your own sanity, don't release historical cookbooks into the wild."
-        exit 5
+        ui.warn 'There are untracked files in your repo. You might want to look into that.'
       end
     end
 
     # Ensure that there isn't already a git tag for this version.
     def validate_no_existing_tag(tag_string)
-      existing_tags = Array.new
+      existing_tags = []
       @gitrepo.tags.each { |tag| existing_tags << tag.name }
       if existing_tags.include?(tag_string)
-        ui.error "This version tag has already been committed to the repo."
+        ui.error 'This version tag has already been committed to the repo.'
         ui.error "Are you sure you haven't released this already?"
         exit 6
       end
@@ -207,26 +186,26 @@ module KnifeCommunity
     def validate_target_remote_branch
       remote_path = File.join(config[:remote], config[:branch])
 
-      remotes = Array.new
+      remotes = []
       @gitrepo.remotes.each { |remote| remotes << remote.name }
       unless remotes.include?(remote_path)
-        ui.error "The remote/branch specified does not seem to exist."
+        ui.error 'The remote/branch specified does not seem to exist.'
         exit 7
       end
     end
 
     # Replace the existing version string with the new version
     def set_new_cb_version
-      metadata_file = File.join(@cb_path, "metadata.rb")
+      metadata_file = File.join(@cb_path, 'metadata.rb')
       fi = File.read(metadata_file)
       fi.gsub!(/version(\s+)('|")#{@cb_version.to_s}('|")/, "version\\1\\2#{@version.to_s}\\3")
-      fo = File.open(metadata_file, 'w') { |file| file.puts fi }
+      File.open(metadata_file, 'w') { |file| file.puts fi }
     end
 
     # Using shellout as needed.
     # @todo Struggled with the Grit::Repo#add for hours.
     def commit_new_cb_version
-      shellout("git add metadata.rb")
+      shellout('git add metadata.rb')
       @gitrepo.commit_index("release v#{@version}")
     end
 
@@ -240,15 +219,15 @@ module KnifeCommunity
     end
 
     def set_odd_cb_version
-      metadata_file = File.join(@cb_path, "metadata.rb")
+      metadata_file = File.join(@cb_path, 'metadata.rb')
       fi = File.read(metadata_file)
       fi.gsub!(/version(\s+)('|")#{@version.to_s}('|")/, "version\\1\\2#{@version.bump(:tiny).to_s}\\3")
-      fo = File.open(metadata_file, 'w') { |file| file.puts fi }
+      File.open(metadata_file, 'w') { |file| file.puts fi }
     end
 
     def commit_odd_cb_version
-      shellout("git add metadata.rb")
-      @gitrepo.commit_index("increment version for development")
+      shellout('git add metadata.rb')
+      @gitrepo.commit_index('increment version for development')
     end
 
     # Apparently Grit does not have any `push` semantics yet.
@@ -262,8 +241,8 @@ module KnifeCommunity
 
     def share_new_version
       # Need to find the existing cookbook's category. Thankfully, this is readily available via REST/JSON.
-      response = Net::HTTP.get_response("supermarket.chef.io", "/api/v1/cookbooks/#{@cb_name}")
-      category = JSON.parse(response.body)['category'] ||= "Other"
+      response = Net::HTTP.get_response('supermarket.chef.io', "/api/v1/cookbooks/#{@cb_name}")
+      category = JSON.parse(response.body)['category'] ||= 'Other'
 
       cb_share = Chef::Knife::CookbookSiteShare.new
       cb_share.name_args = [@cb_name, category]
@@ -271,11 +250,10 @@ module KnifeCommunity
     end
 
     def shellout(command)
-      proc = Mixlib::ShellOut.new(command, :cwd => @cb_path)
+      proc = Mixlib::ShellOut.new(command, cwd: @cb_path)
       proc.run_command
       proc.error!
-      return proc
+      proc
     end
-
-  end #class
-end #module
+  end # class
+end # module
