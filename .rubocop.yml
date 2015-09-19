@@ -4,15 +4,16 @@ inherit_from: .rubocop_todo.yml
 
 AllCops:
   Include:
-    - Appraisals
-    - Gemfile
-    - Guardfile
-    - Rakefile
+    - '**/Appraisals'
+    - '**/Gemfile'
+    - '**/Guardfile'
+    - '**/Rakefile'
     - lib/
     - knife-community.gemspec
     - spec/
   Exclude:
-    - gemfiles/
+    - 'gemfiles/**/*'
+    - 'vendor/**/*'
 
 Metrics/LineLength:
   Max: 180
