@@ -60,26 +60,20 @@ module KnifeCommunity
       self.config = Chef::Config.merge!(config)
       validate_args
       # Set variables for global use
-      @cookbook = name_args.first
-      @version = Versionomy.parse(name_args.last) if name_args.size > 1
-      [@cookbook, @version, config]
+      @cookbook_name = name_args.first
+      @target_version = Versionomy.parse(name_args.last) if name_args.size > 1
+      [@cookbook_name, @target_version, config]
     end
 
     def run
       setup
 
       ui.msg 'Starting to validate the envrionment before changing anything...'
-      CookbookValidator.new(cookbook_name, cookbook_path, target_version).validate!
-
-      # cb = cookbook_loader.cookbooks_by_name[cookbook_name]
-      # @cb_path = cb.root_dir
-      # @cb_name = cb.metadata.name.to_s
-      # @cb_version = Versionomy.parse(cb.version)
+      CookbookValidator.new(@cookbook_name, config[:cookbook_path], @target_version).validate!
 
       validate_repo
       validate_repo_clean
 
-      validate_version_sanity
       validate_no_existing_tag(tag_string)
 
       # TODO: skip next step if --no-git-push is provided
@@ -96,17 +90,17 @@ module KnifeCommunity
       end
 
       if config[:site_share]
-        confirm_share_msg = "Shall I release version #{@version} of the"
+        confirm_share_msg = "Shall I release version #{@target_version} of the"
         confirm_share_msg << " #{@cb_name} cookbook to the Supermarket? (Y/N) "
         if config[:yes] || (ask_question(confirm_share_msg).chomp.upcase == 'Y')
           share_new_version
-          ui.msg "Version #{@version} of the #{@cb_name} cookbook has been released!"
+          ui.msg "Version #{@target_version} of the #{@cb_name} cookbook has been released!"
           ui.msg "Check it out at http://ckbk.it/#{@cb_name}"
         end
       end
 
       if config[:devodd]
-        if @version.tiny.even?
+        if @target_version.tiny.even?
           set_odd_cb_version
           commit_odd_cb_version
 
@@ -199,7 +193,7 @@ module KnifeCommunity
     def set_new_cb_version
       metadata_file = File.join(@cb_path, 'metadata.rb')
       fi = File.read(metadata_file)
-      fi.gsub!(/version(\s+)('|")#{@cb_version.to_s}('|")/, "version\\1\\2#{@version}\\3")
+      fi.gsub!(/version(\s+)('|")#{@cb_version.to_s}('|")/, "version\\1\\2#{@target_version}\\3")
       File.open(metadata_file, 'w') { |file| file.puts fi }
     end
 
@@ -207,22 +201,22 @@ module KnifeCommunity
     # @todo Struggled with the Grit::Repo#add for hours.
     def commit_new_cb_version
       shellout('git add metadata.rb')
-      @gitrepo.commit_index("release v#{@version}")
+      @gitrepo.commit_index("release v#{@target_version}")
     end
 
     # Returns the desired tag string, based on config option
     def tag_string
-      config[:tag_prefix] ? "#{config[:tag_prefix]}#{@version}" : @version.to_s
+      config[:tag_prefix] ? "#{config[:tag_prefix]}#{@target_version}" : @target_version.to_s
     end
 
     def tag_new_cb_version(tag_string)
-      shellout("git tag -a -m 'release v#{@version}' #{tag_string}")
+      shellout("git tag -a -m 'release v#{@target_version}' #{tag_string}")
     end
 
     def set_odd_cb_version
       metadata_file = File.join(@cb_path, 'metadata.rb')
       fi = File.read(metadata_file)
-      fi.gsub!(/version(\s+)('|")#{@version.to_s}('|")/, "version\\1\\2#{@version.bump(:tiny)}\\3")
+      fi.gsub!(/version(\s+)('|")#{@target_version.to_s}('|")/, "version\\1\\2#{@target_version.bump(:tiny)}\\3")
       File.open(metadata_file, 'w') { |file| file.puts fi }
     end
 
